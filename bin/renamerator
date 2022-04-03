@@ -20,6 +20,7 @@ recursive=false
 periods=false
 underscores=false
 dashes=false
+years=false
 dryrun=false
 #######################################
 usage () {
@@ -37,6 +38,7 @@ Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
 -R	Directory renaming will happen recursively.
 -p	Periods will be converted into spaces.
 -u	Underscores will be converted into spaces.
+-y	Years (date) will be removed.
 -t	Dry run.  No actual changes will take place.
 -D 	Dashes will be converted into spaces.
 -o 	Specify a new output directory.
@@ -78,14 +80,17 @@ rename () {
 	if [[ $removal == true ]]; then
 		_newname=$(remove "$_newname")
 	fi
-	if [[ $periods == true ]]; then
-		_newname=$(transmute_periods "$_newname")
+	if [[ $years == true ]]; then
+		_newname=$(yank_years "$_newname")
 	fi
 	if [[ $underscores == true ]]; then
 		_newname=$(transmute_underscores "$_newname")
 	fi
 	if [[ $dashes == true ]]; then
 		_newname=$(transmute_dashes "$_newname")
+	fi
+	if [[ $periods == true ]]; then
+		_newname=$(transmute_periods "$_newname")
 	fi
 
 	if [[ -d "$output_dir" ]]; then
@@ -104,7 +109,7 @@ rename () {
 	fi
 }
 #######################################
-while getopts hf:d:rRpudDto:q opt; do
+while getopts hf:d:rRpudDto:qy opt; do
 	case $opt in
 		f)	file=$OPTARG;;
 		d)	directory=$OPTARG;;
@@ -116,6 +121,7 @@ while getopts hf:d:rRpudDto:q opt; do
 		t)	dryrun=true;;
 		q)	quiet=true;;
 		o)	output_dir=$(realpath "$OPTARG");;
+		y)	years=true;;
 		h)	usage;;
 		*)  err "Unknown option: $opt"; usage;;
 	esac

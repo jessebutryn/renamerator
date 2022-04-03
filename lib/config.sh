@@ -5,32 +5,36 @@ if ! (return 0 2>/dev/null); then
 fi
 #######################################
 remove=(
-	2160p
-	1080p
-	720p
-	bluray
-	'[xh][\.]?26[45]'
-	dolbyd
-	'[Dd]?[Dd]?5\.1'
-	nickarad
-	chinese
-	HDRip
-	HC
-	HEVA
-	BONE
-	AMZN
-	WEBRip
-	800MB
-	'[-]?GalaxyRG'
-	An0mal1
-	NORWEGIAN
-	1400MB
-	AAC2.0
-	'[\(\)]'
+	'1080p'
+	'1400MB'
+	'2160p'
+	'720p'
+	'800MB'
+	'AAC2[.]?0'
+	'AMZN'
+	'An0mal1'
+	'bluray'
+	'BONE'
+	'chinese'
+	'dolbyd'
+	'HC'
+	'HDRip'
+	'HEVA'
+	'Mkvking'
+	'nickarad'
+	'NORWEGIAN'
 	'Official Audio'
-	'Official Video'
 	'Official Music Video'
+	'Official Video'
+	'remaster'
 	'remastered in 4k'
-	remaster
+	'VMAX'
+	'WEB-Rip'
+	'WEBRip'
+	'[-]?GalaxyRG'
+	'[Dd]?[Dd]?5\.1'
+	'[xh][\.]?26[45]'
+	'[\(\)]'
 	'[\[\]]'
+	'\+'
 )

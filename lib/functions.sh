@@ -19,6 +19,11 @@ transmute_underscores () {
 	local _newname=$(echo "$_basename" | tr -s '_' ' ' | tr -s ' ')
 	printf '%s\n' "$_newname"
 }
+yank_years () {
+	local _basename=$1
+	local _newname=$(echo "$_basename" | sed -E 's/[12][109][0-9][0-9]//g' | tr -s ' ')
+	printf '%s\n' "$_newname"
+}
 remove () {
 	local _newname=$1
 	for p in "${remove[@]}"; do 
