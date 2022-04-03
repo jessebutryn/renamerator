@@ -28,7 +28,7 @@ This script will rename a given file or directory full of files to remove
 common unwanted phrases, labels, delimiters, etc.
 
 Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-	$(basename "$0") [-hpudrRD] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
+	$(basename "$0") [-hpudrRqDt] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
 -h	Print usage.
 -f	Provide the filename to be renamed.
 -d	Provide a directory name.  All files inside this directory will be renamed.
@@ -37,8 +37,8 @@ Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
 -p	Periods will be converted into spaces.
 -u	Underscores will be converted into spaces.
 -t	Dry run.  No actual changes will take place.
--D  Dashes will be converted into spaces.
--o  Specify a new output directory.
+-D 	Dashes will be converted into spaces.
+-o 	Specify a new output directory.
 EOF
 	exit 2
 }
@@ -96,12 +96,11 @@ rename () {
 	if [[ "$_realpath" == "$_newfullname" ]]; then
 		[[ $quiet == false ]] &&
 		printf '%s: No change' "$_realpath" >&2
-	if [[ $dryrun == true ]]; then
+	elif [[ $dryrun == true ]]; then
 		printf 'mv "%s" "%s"\n' "$_realpath" "$_newfullname" >&2
 	else
 		mv "$_realpath" "$_newfullname"
 	fi
-
 }
 #######################################
 while getopts hf:d:rRpudDto:q opt; do
