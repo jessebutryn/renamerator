@@ -2,14 +2,14 @@
 #
 [[ $DEBUG == true ]] && set -x
 #######################################
-if [[ -f "${0%/*}/../lib/functions.sh" ]]; then
-	. "${0%/*}/../lib/functions.sh"
+if [[ -f "$(dirname "$(realpath "$0")")/../lib/functions.sh" ]]; then
+	. "$(dirname "$(realpath "$0")")/../lib/functions.sh"
 else
 	printf '%s\n' 'ERROR! Could not find lib/functions.sh' >&2
 	exit 1
 fi
-if [[ -f "${0%/*}/../lib/config.sh" ]]; then
-	. "${0%/*}/../lib/config.sh"
+if [[ -f "$(dirname "$(realpath "$0")")/../lib/config.sh" ]]; then
+	. "$(dirname "$(realpath "$0")")/../lib/config.sh"
 else
 	printf '%s\n' 'ERROR! Could not find lib/config.sh' >&2
 	exit 1
@@ -29,6 +29,7 @@ common unwanted phrases, labels, delimiters, etc.
 
 Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
 	$(basename "$0") [-hpudrRqDt] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
+
 -h	Print usage.
 -f	Provide the filename to be renamed.
 -d	Provide a directory name.  All files inside this directory will be renamed.
@@ -115,7 +116,7 @@ while getopts hf:d:rRpudDto:q opt; do
 		t)	dryrun=true;;
 		q)	quiet=true;;
 		o)	output_dir=$(realpath "$OPTARG");;
-		h)  usage;;
+		h)	usage;;
 		*)  err "Unknown option: $opt"; usage;;
 	esac
 done
