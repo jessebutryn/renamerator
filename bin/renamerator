@@ -1,0 +1,133 @@
+#!/usr/bin/env bash
+#
+[[ $DEBUG == true ]] && set -x
+#######################################
+if [[ -f "${0%/*}/../lib/functions.sh" ]]; then
+	. "${0%/*}/../lib/functions.sh"
+else
+	printf '%s\n' 'ERROR! Could not find lib/functions.sh' >&2
+	exit 1
+fi
+if [[ -f "${0%/*}/../lib/config.sh" ]]; then
+	. "${0%/*}/../lib/config.sh"
+else
+	printf '%s\n' 'ERROR! Could not find lib/config.sh' >&2
+	exit 1
+fi
+#######################################
+removal=false
+recursive=false
+periods=false
+underscores=false
+dashes=false
+dryrun=false
+#######################################
+usage () {
+	cat <<EOF >&2
+This script will rename a given file or directory full of files to remove
+common unwanted phrases, labels, delimiters, etc.
+
+Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
+	$(basename "$0") [-hpudrRD] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
+-h	Print usage.
+-f	Provide the filename to be renamed.
+-d	Provide a directory name.  All files inside this directory will be renamed.
+-r	Pattern removal will take place.
+-R	Directory renaming will happen recursively.
+-p	Periods will be converted into spaces.
+-u	Underscores will be converted into spaces.
+-t	Dry run.  No actual changes will take place.
+-D  Dashes will be converted into spaces.
+-o  Specify a new output directory.
+EOF
+	exit 2
+}
+get_files () {
+	local _file=$1
+	local _dir
+	local _tmp
+	if [[ -f "$_file" ]]; then
+		printf '%s\n' "$_file"
+	elif [[ -d "$_file" && $recursive == false ]]; then
+		_dir=$(realpath "$_file")
+		for f in "${_dir}/"*; do
+			if [[ -f "$f" ]]; then
+				printf '%s\n' "$f"
+			fi
+		done
+	elif [[ -d "$_file" && $recursive == true ]]; then
+		_dir=$(realpath "$_file")
+		find "$_dir" -type f -follow -print
+	else
+		err "File ($_file) unknown"
+		return 1
+	fi
+}
+rename () {
+	local _file=$1
+	local _realpath=$(realpath "$_file")
+	local _basename=$(basename "$_realpath")
+	local _dirname=$(dirname "$_realpath")
+	local _newname=$_basename
+	local _newfullname
+	if [[ ! -w $_file ]]; then
+		err "File ($_realpath) is not writable."
+		return 1
+	fi
+	if [[ $removal == true ]]; then
+		_newname=$(remove "$_newname")
+	fi
+	if [[ $periods == true ]]; then
+		_newname=$(transmute_periods "$_newname")
+	fi
+	if [[ $underscores == true ]]; then
+		_newname=$(transmute_underscores "$_newname")
+	fi
+	if [[ $dashes == true ]]; then
+		_newname=$(transmute_dashes "$_newname")
+	fi
+
+	if [[ -d "$output_dir" ]]; then
+		_newfullname="${output_dir}/${_newname}"
+	elif [[ -n "$_newname" ]]; then
+		_newfullname="${_dirname}/${_newname}"
+	fi
+
+	if [[ "$_realpath" == "$_newfullname" ]]; then
+		[[ $quiet == false ]] &&
+		printf '%s: No change' "$_realpath" >&2
+	if [[ $dryrun == true ]]; then
+		printf 'mv "%s" "%s"\n' "$_realpath" "$_newfullname" >&2
+	else
+		mv "$_realpath" "$_newfullname"
+	fi
+
+}
+#######################################
+while getopts hf:d:rRpudDto:q opt; do
+	case $opt in
+		f)	file=$OPTARG;;
+		d)	directory=$OPTARG;;
+		r)	removal=true;;
+		R)	recursive=true;;
+		p)	periods=true;;
+		D)	dashes=true;;
+		u)	underscores=true;;
+		t)	dryrun=true;;
+		q)	quiet=true;;
+		o)	output_dir=$(realpath "$OPTARG");;
+		h)  usage;;
+		*)  err "Unknown option: $opt"; usage;;
+	esac
+done
+#######################################
+if [[ -n $file && -n $directory ]]; then
+	err '-f and -d are mutually exclusive options.  Please use only one.'
+	exit 1
+fi
+
+readarray -t files < <(get_files "${file:=$directory}")
+
+for f in "${files[@]}"; do
+	rename "$f"
+done
