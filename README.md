@@ -90,7 +90,7 @@ The following tools are required for this to work:
 
 ```
 Usage:  renamerator -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-        renamerator [-hpudrRqDt] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
+        renamerator [-hpurRqDty] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
 
 -h      Print usage.
 -f      Provide the filename to be renamed.
@@ -99,6 +99,7 @@ Usage:  renamerator -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
 -R      Directory renaming will happen recursively.
 -p      Periods will be converted into spaces.
 -u      Underscores will be converted into spaces.
+-y      Years (date) will be removed.
 -t      Dry run.  No actual changes will take place.
 -D      Dashes will be converted into spaces.
 -o      Specify a new output directory.

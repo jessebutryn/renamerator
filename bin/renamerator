@@ -29,7 +29,7 @@ This script will rename a given file or directory full of files to remove
 common unwanted phrases, labels, delimiters, etc.
 
 Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-	$(basename "$0") [-hpudrRqDt] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
+	$(basename "$0") [-hpurRqDty] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
 
 -h	Print usage.
 -f	Provide the filename to be renamed.
@@ -123,7 +123,7 @@ while getopts hf:d:rRpudDto:qy opt; do
 		o)	output_dir=$(realpath "$OPTARG");;
 		y)	years=true;;
 		h)	usage;;
-		*)  err "Unknown option: $opt"; usage;;
+		*)	err "Unknown option: $opt"; usage;;
 	esac
 done
 #######################################
