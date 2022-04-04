@@ -170,7 +170,7 @@ Project Link: [https://github.com/jessebutryn/renamerator](https://github.com/je
 [issues-shield]: https://img.shields.io/github/issues/jessebutryn/renamerator.svg?style=for-the-badge
 [issues-url]: https://github.com/jessebutryn/renamerator/issues
 [license-shield]: https://img.shields.io/github/license/jessebutryn/renamerator.svg?style=for-the-badge
-[license-url]: https://github.com/jessebutryn/renamerator/blob/main/LICENSE.txt
+[license-url]: https://github.com/jessebutryn/renamerator/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/jesse-butryn
 [product-screenshot]: images/screenshot.png
