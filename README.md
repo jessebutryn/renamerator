@@ -48,6 +48,7 @@ modular so you have the ability to select which actions you want to take and whi
 
 Here's what it does:
 * Removes common added words and phrases [eg. WEBRip, x264, 1080p, etc].
+* Removes years (date).
 * Changes periods into spaces, except for the last period.
 * Changes underscores into spaces.
 * Changes dashes into spaces.
