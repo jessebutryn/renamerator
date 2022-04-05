@@ -91,9 +91,10 @@ The following tools are required for this to work:
 
 ```
 Usage:  renamerator -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-        renamerator [-hpurRqDty] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
+        renamerator [-hpurRqDtyA] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
 
 -h      Print usage.
+-A      All substitutions and replacements will take place.
 -f      Provide the filename to be renamed.
 -d      Provide a directory name.  All files inside this directory will be renamed.
 -r      Pattern removal will take place.
@@ -104,6 +105,7 @@ Usage:  renamerator -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
 -t      Dry run.  No actual changes will take place.
 -D      Dashes will be converted into spaces.
 -o      Specify a new output directory.
+-q      Quiet mode.
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -132,7 +134,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the GPLv2 License. See `LICENSE.txt` for more information.
+Distributed under the GPLv2 License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

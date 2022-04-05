@@ -29,9 +29,10 @@ This script will rename a given file or directory full of files to remove
 common unwanted phrases, labels, delimiters, etc.
 
 Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-	$(basename "$0") [-hpurRqDty] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
+	$(basename "$0") [-hpurRqDtyA] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
 
 -h	Print usage.
+-A	All substitutions and replacements will take place.
 -f	Provide the filename to be renamed.
 -d	Provide a directory name.  All files inside this directory will be renamed.
 -r	Pattern removal will take place.
@@ -42,41 +43,53 @@ Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
 -t	Dry run.  No actual changes will take place.
 -D 	Dashes will be converted into spaces.
 -o 	Specify a new output directory.
+-q	Quiet mode.
 EOF
 	exit 2
 }
+
+
+
 get_files () {
 	local _file=$1
 	local _dir
 	local _tmp
+
+
+
 	if [[ -f "$_file" ]]; then
 		printf '%s\n' "$_file"
 	elif [[ -d "$_file" && $recursive == false ]]; then
-		_dir=$(realpath "$_file")
+		_dir=$_file
 		for f in "${_dir}/"*; do
 			if [[ -f "$f" ]]; then
 				printf '%s\n' "$f"
 			fi
 		done
 	elif [[ -d "$_file" && $recursive == true ]]; then
-		_dir=$(realpath "$_file")
+		_dir=$_file
 		find "$_dir" -type f -follow -print
 	else
 		err "File ($_file) unknown"
 		return 1
 	fi
 }
+
+
+
 rename () {
 	local _file=$1
-	local _realpath=$(realpath "$_file")
-	local _basename=$(basename "$_realpath")
-	local _dirname=$(dirname "$_realpath")
+	local _basename=$(basename "$_file")
+	local _dirname=$(dirname "$_file")
 	local _newname=$_basename
 	local _newfullname
 	if [[ ! -w $_file ]]; then
-		err "File ($_realpath) is not writable."
+		err "File ($_file) is not writable."
 		return 1
 	fi
+
+
+
 	if [[ $removal == true ]]; then
 		_newname=$(remove "$_newname")
 	fi
@@ -93,26 +106,31 @@ rename () {
 		_newname=$(transmute_periods "$_newname")
 	fi
 
+
+
 	if [[ -d "$output_dir" ]]; then
 		_newfullname="${output_dir}/${_newname}"
 	elif [[ -n "$_newname" ]]; then
 		_newfullname="${_dirname}/${_newname}"
 	fi
 
-	if [[ "$_realpath" == "$_newfullname" ]]; then
+
+
+	if [[ "$_file" == "$_newfullname" ]]; then
 		[[ $quiet == false ]] &&
-		printf '%s: No change' "$_realpath" >&2
+		printf '%s: No change' "$_file" >&2
 	elif [[ $dryrun == true ]]; then
-		printf 'mv "%s" "%s"\n' "$_realpath" "$_newfullname" >&2
+		printf 'mv "%s" "%s"\n' "$_file" "$_newfullname" >&2
 	else
-		mv "$_realpath" "$_newfullname"
+		mv "$_file" "$_newfullname"
 	fi
 }
 #######################################
-while getopts hf:d:rRpudDto:qy opt; do
+while getopts hf:d:rRpudDto:qyA opt; do
 	case $opt in
-		f)	file=$OPTARG;;
-		d)	directory=$OPTARG;;
+		A)	removal=true; periods=true; dashes=true; underscores=true; years=true;;
+		f)	file=$(realpath "$OPTARG");;
+		d)	directory=$(realpath "$OPTARG");;
 		r)	removal=true;;
 		R)	recursive=true;;
 		p)	periods=true;;
