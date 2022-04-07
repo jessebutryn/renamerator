@@ -2,14 +2,15 @@
 #
 [[ $DEBUG == true ]] && set -x
 #######################################
-if [[ -f "$(dirname "$(realpath "$0")")/../lib/functions.sh" ]]; then
-	. "$(dirname "$(realpath "$0")")/../lib/functions.sh"
+libdir="$(dirname "$(realpath "$0")")/../lib"
+if [[ -f "${libdir}/functions.sh" ]]; then
+	. "${libdir}/functions.sh"
 else
 	printf '%s\n' 'ERROR! Could not find lib/functions.sh' >&2
 	exit 1
 fi
-if [[ -f "$(dirname "$(realpath "$0")")/../lib/config.sh" ]]; then
-	. "$(dirname "$(realpath "$0")")/../lib/config.sh"
+if [[ -f "${libdir}/config.sh" ]]; then
+	. "${libdir}/config.sh"
 else
 	printf '%s\n' 'ERROR! Could not find lib/config.sh' >&2
 	exit 1
@@ -22,6 +23,7 @@ underscores=false
 dashes=false
 years=false
 dryrun=false
+capitalize=false
 delimiter=' '
 #######################################
 usage () {
@@ -30,13 +32,15 @@ This script will rename a given file or directory full of files to remove
 common unwanted phrases, labels, delimiters, etc.
 
 Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-	$(basename "$0") [-hpurRqDtyA] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
+	$(basename "$0") [-hpurRqDtyA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
 
 -h	Print usage.
 -A	All substitutions and replacements will take place.
 -f	Provide the filename to be renamed.
 -d	Provide a directory name.  All files inside this directory will be renamed.
+-c	Words will be capitalized.
 -r	Pattern removal will take place.
+-k	Specify a delimiter (default will be space).
 -R	Directory renaming will happen recursively.
 -p	Periods will be converted into spaces.
 -u	Underscores will be converted into spaces.
@@ -106,6 +110,9 @@ rename () {
 	if [[ $periods == true ]]; then
 		_newname=$(transmute_periods "$_newname")
 	fi
+	if [[ $capitalize == true ]]; then
+		_newname=$(echo "$_newname" | "${libdir}/capitalize.awk")
+	fi
 
 	_newname=$(delimit "$_newname")
 
@@ -129,15 +136,16 @@ rename () {
 	fi
 }
 #######################################
-while getopts hf:d:rRpudDto:qyk:A opt; do
+while getopts hf:d:rRcpudDto:qyk:A opt; do
 	case $opt in
-		A)	removal=true; periods=true; dashes=true; underscores=true; years=true;;
+		A)	removal=true; periods=true; dashes=true; underscores=true; years=true; capitalize=true;;
 		f)	file=$(realpath "$OPTARG");;
 		d)	directory=$(realpath "$OPTARG");;
 		r)	removal=true;;
 		R)	recursive=true;;
 		p)	periods=true;;
 		D)	dashes=true;;
+		c)	capitalize=true;;
 		u)	underscores=true;;
 		t)	dryrun=true;;
 		k)	delimiter=$OPTARG;;

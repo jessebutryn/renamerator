@@ -26,7 +26,8 @@ yank_years () {
 }
 delimit () {
 	local _basename=$1
-	printf '%s' "$(echo "$_newname" | tr -s ' ._-' | tr ' ' "$delimiter")"
+	local _newname=$(echo "$_basename" | tr -s ' ._-' | tr ' ' "$delimiter")
+	printf '%s' "$_newname"
 }
 remove () {
 	local _newname=$1

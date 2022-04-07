@@ -91,13 +91,15 @@ The following tools are required for this to work:
 
 ```
 Usage:  renamerator -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-        renamerator [-hpurRqDtyA] [-f FILENAME | -d DIRECTORY] [-o OUTPUT_DIRECTORY]
+        renamerator [-hpurRqDtysA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
 
 -h      Print usage.
 -A      All substitutions and replacements will take place.
 -f      Provide the filename to be renamed.
 -d      Provide a directory name.  All files inside this directory will be renamed.
 -r      Pattern removal will take place.
+-k      Specify a delimiter (default will be space).
+-s      If a season pattern (s01e01) is found it will be capitalized and sandwiched with dashes.
 -R      Directory renaming will happen recursively.
 -p      Periods will be converted into spaces.
 -u      Underscores will be converted into spaces.
