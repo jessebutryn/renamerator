@@ -9,7 +9,7 @@ BEGIN{
 	for(i=1; i<=NF; i++) {
 		if (i == 1) {
 			str=toupper(substr($i,1,1)) tolower(substr($i,2))
-		} else if (1 == NF){
+		} else if (i == NF){
 			str=tolower($i)
 		} else if ($i ~ /[Ss][0-9]{2}[Ee][0-9]{2}/) {
 			str=toupper($i)
