@@ -22,6 +22,7 @@ underscores=false
 dashes=false
 years=false
 dryrun=false
+delimiter=' '
 #######################################
 usage () {
 	cat <<EOF >&2
@@ -106,6 +107,8 @@ rename () {
 		_newname=$(transmute_periods "$_newname")
 	fi
 
+	_newname=$(delimit "$_newname")
+
 
 
 	if [[ -d "$output_dir" ]]; then
@@ -126,7 +129,7 @@ rename () {
 	fi
 }
 #######################################
-while getopts hf:d:rRpudDto:qyA opt; do
+while getopts hf:d:rRpudDto:qyk:A opt; do
 	case $opt in
 		A)	removal=true; periods=true; dashes=true; underscores=true; years=true;;
 		f)	file=$(realpath "$OPTARG");;
@@ -137,6 +140,7 @@ while getopts hf:d:rRpudDto:qyA opt; do
 		D)	dashes=true;;
 		u)	underscores=true;;
 		t)	dryrun=true;;
+		k)	delimiter=$OPTARG;;
 		q)	quiet=true;;
 		o)	output_dir=$(realpath "$OPTARG");;
 		y)	years=true;;

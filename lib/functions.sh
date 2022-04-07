@@ -7,22 +7,26 @@ fi
 transmute_periods () {
 	local _basename=$1
 	local _newname=$(echo "$_basename" | sed -E 's/^(.*)\./\1\_/; s/\./ /g; s/_/\./; s/\s+\./\./' | tr -s ' ')
-	printf '%s\n' "$_newname"
+	printf '%s' "$_newname"
 }
 transmute_dashes () {
 	local _basename=$1
-	local _newname=$(echo "$_basename" | tr -s '-' ' ' | tr -s ' ')
-	printf '%s\n' "$_newname"
+	local _newname=$(echo "$_basename" | tr '-' ' ' | tr -s ' ')
+	printf '%s' "$_newname"
 }
 transmute_underscores () {
 	local _basename=$1
-	local _newname=$(echo "$_basename" | tr -s '_' ' ' | tr -s ' ')
-	printf '%s\n' "$_newname"
+	local _newname=$(echo "$_basename" | tr '_' ' ' | tr -s ' ')
+	printf '%s' "$_newname"
 }
 yank_years () {
 	local _basename=$1
 	local _newname=$(echo "$_basename" | sed -E 's/[12][109][0-9][0-9]//g' | tr -s ' ')
-	printf '%s\n' "$_newname"
+	printf '%s' "$_newname"
+}
+delimit () {
+	local _basename=$1
+	printf '%s' "$(echo "$_newname" | tr -s ' ._-' | tr ' ' "$delimiter")"
 }
 remove () {
 	local _newname=$1
