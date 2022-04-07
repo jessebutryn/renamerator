@@ -100,11 +100,11 @@ Usage:  renamerator -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
 -r      Pattern removal will take place.
 -k      Specify a delimiter (default will be space).
 -R      Directory renaming will happen recursively.
--p      Periods will be converted into spaces.
--u      Underscores will be converted into spaces.
+-p      Periods will be converted into set delimiter (default space).
+-u      Underscores will be converted into set delimiter (default space).
 -y      Years (date) will be removed.
 -t      Dry run.  No actual changes will take place.
--D      Dashes will be converted into spaces.
+-D      Dashes will be converted into set delimiter (default space).
 -o      Specify a new output directory.
 -q      Quiet mode.
 ```
