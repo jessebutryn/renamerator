@@ -9,10 +9,12 @@ else
 	printf '%s\n' 'ERROR! Could not find lib/functions.sh' >&2
 	exit 1
 fi
-if [[ -f "${libdir}/config.sh" ]]; then
-	. "${libdir}/config.sh"
-else
-	printf '%s\n' 'ERROR! Could not find lib/config.sh' >&2
+if [[ ! -f "${libdir}/capitalize.awk" ]]; then
+	printf '%s\n' 'ERROR! Could not find lib/capitalize.awk' >&2
+	exit 1
+fi
+if [[ ! -f "${libdir}/remove.pl" ]]; then
+	printf '%s\n' 'ERROR! Could not find lib/remove.pl' >&2
 	exit 1
 fi
 #######################################
@@ -25,6 +27,7 @@ years=false
 dryrun=false
 capitalize=false
 delimiter=' '
+quiet=false
 #######################################
 usage () {
 	cat <<EOF >&2
@@ -82,7 +85,7 @@ get_files () {
 
 
 
-rename () {
+renamerate () {
 	local _file=$1
 	local _basename=$(basename "$_file")
 	local _dirname=$(dirname "$_file")
@@ -96,7 +99,7 @@ rename () {
 
 
 	if [[ $removal == true ]]; then
-		_newname=$(remove "$_newname")
+		_newname=$(echo "$_newname" | "${libdir}/remove.pl")
 	fi
 	if [[ $years == true ]]; then
 		_newname=$(yank_years "$_newname")
@@ -125,10 +128,12 @@ rename () {
 	fi
 
 
-
 	if [[ "$_file" == "$_newfullname" ]]; then
 		[[ $quiet == false ]] &&
-		printf '%s: No change' "$_file" >&2
+		printf '%s: No change\n' "$_file" >&2
+	elif [[ -f "$_newfullname" ]]; then
+		[[ $quiet == false ]] &&
+		err "$_newfullname already exists"
 	elif [[ $dryrun == true ]]; then
 		printf 'mv "%s" "%s"\n' "$_file" "$_newfullname" >&2
 	else
@@ -165,5 +170,5 @@ fi
 readarray -t files < <(get_files "${file:=$directory}")
 
 for f in "${files[@]}"; do
-	rename "$f"
+	renamerate "$f"
 done

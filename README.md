@@ -157,6 +157,7 @@ Project Link: [https://github.com/jessebutryn/renamerator](https://github.com/je
 
 
 * [othneildrew's Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+* [terdon](https://unix.stackexchange.com/users/22222/terdon)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

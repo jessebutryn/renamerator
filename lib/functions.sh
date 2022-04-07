@@ -29,13 +29,14 @@ delimit () {
 	local _newname=$(echo "$_basename" | tr -s ' ._-' | tr ' ' "$delimiter")
 	printf '%s' "$_newname"
 }
-remove () {
-	local _newname=$1
-	for p in "${remove[@]}"; do 
-		_newname=$(echo "$_newname" | sed -E 's/'"$p"'//gi')
-	done
-	printf '%s\n' "$_newname"
-}
+# remove () {
+# 	local _newname=$1
+# 	# for p in "${remove[@]}"; do 
+# 	# 	_newname=$(echo "$_newname" | sed -E 's/'"$p"'//gi')
+# 	# done
+# 	_newname=$(echo "$_newname" | sed -E 's/'"$(printf '%s|' "${remove[@]}" | sed s'/|$//')"'//gi')
+# 	printf '%s\n' "$_newname"
+# }
 err () {
 	printf '%s - %s: %s\n' "${txt_bld}[$(TZ=UTC date '+%FT%TZ')]${txt_rst}" \
 	"$(tput bold)Error$(tput sgr0)" "$*" >&2
