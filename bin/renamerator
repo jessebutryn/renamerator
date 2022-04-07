@@ -32,7 +32,7 @@ This script will rename a given file or directory full of files to remove
 common unwanted phrases, labels, delimiters, etc.
 
 Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-	$(basename "$0") [-hpurRqDtyA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
+	$(basename "$0") [-hpurRqDctyA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
 
 -h	Print usage.
 -A	All substitutions and replacements will take place.

@@ -14,7 +14,6 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![GPLv2 License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -91,15 +90,15 @@ The following tools are required for this to work:
 
 ```
 Usage:  renamerator -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-        renamerator [-hpurRqDtysA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
+        renamerator [-hpurRqDctyA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
 
 -h      Print usage.
 -A      All substitutions and replacements will take place.
 -f      Provide the filename to be renamed.
 -d      Provide a directory name.  All files inside this directory will be renamed.
+-c      Words will be capitalized.
 -r      Pattern removal will take place.
 -k      Specify a delimiter (default will be space).
--s      If a season pattern (s01e01) is found it will be capitalized and sandwiched with dashes.
 -R      Directory renaming will happen recursively.
 -p      Periods will be converted into spaces.
 -u      Underscores will be converted into spaces.
@@ -175,6 +174,4 @@ Project Link: [https://github.com/jessebutryn/renamerator](https://github.com/je
 [issues-url]: https://github.com/jessebutryn/renamerator/issues
 [license-shield]: https://img.shields.io/github/license/jessebutryn/renamerator.svg?style=for-the-badge
 [license-url]: https://github.com/jessebutryn/renamerator/blob/main/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://www.linkedin.com/in/jesse-butryn
 [product-screenshot]: images/screenshot.png
