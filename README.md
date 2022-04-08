@@ -90,24 +90,79 @@ The following tools are required for this to work:
 
 ```
 Usage:  renamerator -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-        renamerator [-hpurRqDctyA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
-
--h      Print usage.
--A      All substitutions and replacements will take place.
--f      Provide the filename to be renamed.
--d      Provide a directory name.  All files inside this directory will be renamed.
--c      Words will be capitalized.
--r      Pattern removal will take place.
--k      Specify a delimiter (default will be space).
--R      Directory renaming will happen recursively.
--p      Periods will be converted into set delimiter (default space).
--u      Underscores will be converted into set delimiter (default space).
--y      Years (date) will be removed.
--t      Dry run.  No actual changes will take place.
--D      Dashes will be converted into set delimiter (default space).
--o      Specify a new output directory.
--q      Quiet mode.
+        renamerator [-hpurRqDcatyA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
 ```
+
+### Misc Options
+
+```
+-h  
+  Print usage information to the command line.
+
+-t  
+  This will perform a "dry run".  No actual changes will be made but you will see a list of
+  filenames and changes that would be made.
+
+-q  
+  Quiet mode.  This will suppress warnings about unchanged files.
+```
+
+### Transmute Options
+
+```
+-A  
+  This option will essentially enable all transmute and removal options.  By default this will
+  perform a non-aggressive removal.
+
+-a  
+  Specifies aggressive removal.  By default removal (-r) will only remove patterns that have a
+  relatively low chance of being part of an actual title.  eg H264, XVID, HDTV, etc.
+  However by enabling aggressive removal a second list of patterns will be removed.  These patterns
+  have a higher likelyhood of being part of a title.  eg chinese, english, us, web, etc.
+
+-c  
+  Each word in the title will be capitalized except for words like: the, of, and, etc. 
+  Additionally this will capitalize season and episode strings eg s01e01 becomes S01E01
+
+-r  
+  Specifies pattern removal will take place.  By default this will perform non-aggressive removal.
+
+-k DELIMITER
+  Supply a custom delimiter.  By default a single space will be used.
+  note: DELIMITER can only be a single character.
+
+-p
+  This will convert all periods into the specified (or default) DELIMITER.  This will not remove
+  the final period between the filename and extension.
+
+-u
+  This will convert all underscores into the specified (or default) DELIMITER.
+
+-y
+  Patterns matching any year between 1900-2199 will be removed.
+
+-D
+  Dashes (-) will be converted into the specified (or default) DELIMITER.
+```
+
+### Input/Output Options
+
+```
+-f FILE
+  Provide a single file to perform rename actions on.
+
+-d DIRECTORY
+  Provide a directory of files to perform rename actions on.  Every regular file in this directory
+  will be evaluated and renamed if applicable.  By default this will not be done recursively.
+
+-R
+  When used with -d the directory renaming will be performed recursively.
+
+-o OUTPUT_DIRECTORY
+  The new files will be moved into the specified output directory.
+```
+
+####
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

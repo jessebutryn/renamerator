@@ -19,6 +19,7 @@ if [[ ! -f "${libdir}/remove.pl" ]]; then
 fi
 #######################################
 removal=false
+aggressive=false
 recursive=false
 periods=false
 underscores=false
@@ -35,9 +36,10 @@ This script will rename a given file or directory full of files to remove
 common unwanted phrases, labels, delimiters, etc.
 
 Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-	$(basename "$0") [-hpurRqDctyA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
+	$(basename "$0") [-hpurRaqDctyA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
 
 -h	Print usage.
+-a	Aggressive removal will be performed.
 -A	All substitutions and replacements will take place.
 -f	Provide the filename to be renamed.
 -d	Provide a directory name.  All files inside this directory will be renamed.
@@ -99,7 +101,11 @@ renamerate () {
 
 
 	if [[ $removal == true ]]; then
-		_newname=$(echo "$_newname" | "${libdir}/remove.pl")
+		if [[ $aggressive == true ]]; then
+			_newname=$(echo "$_newname" | "${libdir}/remove_junk.pl" | "${libdir}/remove_aggressive.pl")
+		elif [[ $aggressive == false ]]; then
+			_newname=$(echo "$_newname" | "${libdir}/remove_junk.pl"
+		fi
 	fi
 	if [[ $years == true ]]; then
 		_newname=$(yank_years "$_newname")
@@ -141,9 +147,10 @@ renamerate () {
 	fi
 }
 #######################################
-while getopts hf:d:rRcpudDto:qyk:A opt; do
+while getopts hf:d:raRcpudDto:qyk:A opt; do
 	case $opt in
 		A)	removal=true; periods=true; dashes=true; underscores=true; years=true; capitalize=true;;
+		a)	aggressive=true;;
 		f)	file=$(realpath "$OPTARG");;
 		d)	directory=$(realpath "$OPTARG");;
 		r)	removal=true;;
