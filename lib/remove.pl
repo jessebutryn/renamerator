@@ -1,7 +1,8 @@
 #!/usr/bin/env perl
 
 my @remove =
-    (
+(
+	'480p',
 	'1080p', 
 	'1400MB', 
 	'2160p', 
@@ -43,8 +44,48 @@ my @remove =
 	'convoy',
 	'mrsk',
 	'\bdl\b',
-	'ettv'
-	);
+	'ettv',
+	'\bre\b',
+	'\bbae\b',
+	'Baeeztv',
+	'trollhd',
+	'amazon',
+	'\bdd\b',
+	'Digitaldistractions',
+	'Tvrip',
+	'Bitsrg',
+	'Pdtv',
+	'xvid',
+	'K4rm4',
+	'2sd',
+	'\bws\b',
+	'\bdsr\b',
+	'Omicron',
+	'W4f',
+	'tvt',
+	'\bIht\b',
+	'\bfqm\b',
+	'\bsys\b',
+	'from wmv',
+	'Gnarly',
+	'\bCtu\b',
+	'Immerse',
+	'Dimension',
+	'\bAac\b',
+	'\baup\b',
+	'\btne\b',
+	'Kompost',
+	'\bfum\b',
+	'\bCw\b',
+	'\bSynhd\b',
+	'\bNada\b',
+	'\brbb\b',
+	'\bafg\b',
+	'2ch',
+	'hevc',
+	'\bpsa\b',
+	'Megusta'
+);
 
 
 while (my $line = <>) {
