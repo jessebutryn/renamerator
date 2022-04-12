@@ -13,8 +13,12 @@ if [[ ! -f "${libdir}/capitalize.awk" ]]; then
 	printf '%s\n' 'ERROR! Could not find lib/capitalize.awk' >&2
 	exit 1
 fi
-if [[ ! -f "${libdir}/remove.pl" ]]; then
-	printf '%s\n' 'ERROR! Could not find lib/remove.pl' >&2
+if [[ ! -f "${libdir}/remove_aggressive.pl" ]]; then
+	printf '%s\n' 'ERROR! Could not find lib/remove_aggressive.pl' >&2
+	exit 1
+fi
+if [[ ! -f "${libdir}/remove_junk.pl" ]]; then
+	printf '%s\n' 'ERROR! Could not find lib/remove_junk.pl' >&2
 	exit 1
 fi
 #######################################
@@ -104,7 +108,7 @@ renamerate () {
 		if [[ $aggressive == true ]]; then
 			_newname=$(echo "$_newname" | "${libdir}/remove_junk.pl" | "${libdir}/remove_aggressive.pl")
 		elif [[ $aggressive == false ]]; then
-			_newname=$(echo "$_newname" | "${libdir}/remove_junk.pl"
+			_newname=$(echo "$_newname" | "${libdir}/remove_junk.pl")
 		fi
 	fi
 	if [[ $years == true ]]; then

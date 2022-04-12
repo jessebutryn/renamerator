@@ -68,7 +68,13 @@ my @remove =
 	'\bafg\b',
 	'2ch',
 	'hevc',
-	'\bpsa\b'
+	'\bpsa\b',
+	'brrip',
+	'sujaidr',
+	'evoethd',
+	'yify',
+	'ac3',
+	'Shaanig'
 );
 
 
