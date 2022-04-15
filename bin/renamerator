@@ -33,6 +33,7 @@ dryrun=false
 capitalize=false
 delimiter=' '
 quiet=false
+prompt=false
 #######################################
 usage () {
 	cat <<EOF >&2
@@ -40,13 +41,14 @@ This script will rename a given file or directory full of files to remove
 common unwanted phrases, labels, delimiters, etc.
 
 Usage:	$(basename "$0") -purdf 'Movie.x264.[DVDRIP].XVID.mp4'
-	$(basename "$0") [-hpurRaqDctyA] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
+	$(basename "$0") [-hpurRaqDctyAi] [-f FILENAME | -d DIRECTORY] [-k DELIMETER] [-o OUTPUT_DIRECTORY]
 
 -h	Print usage.
 -a	Aggressive removal will be performed.
 -A	All substitutions and replacements will take place.
 -f	Provide the filename to be renamed.
 -d	Provide a directory name.  All files inside this directory will be renamed.
+-i	Prompt before every change.
 -c	Words will be capitalized.
 -r	Pattern removal will take place.
 -k	Specify a delimiter (default will be space).
@@ -141,17 +143,26 @@ renamerate () {
 	if [[ "$_file" == "$_newfullname" ]]; then
 		[[ $quiet == false ]] &&
 		printf '%s: No change\n' "$_file" >&2
+		return 5
 	elif [[ -f "$_newfullname" ]]; then
 		[[ $quiet == false ]] &&
 		err "$_newfullname already exists"
+		return 6
 	elif [[ $dryrun == true ]]; then
 		printf 'mv "%s" "%s"\n' "$_file" "$_newfullname" >&2
-	else
+		return 8		
+	fi
+
+	if [[ $prompt == false ]]; then
 		mv "$_file" "$_newfullname"
+	elif [[ $prompt == true ]]; then
+		if yorn_ask "Move $_file to ${_newfullname}?"; then
+			mv "$_file" "$_newfullname"
+		fi
 	fi
 }
 #######################################
-while getopts hf:d:raRcpudDto:qyk:A opt; do
+while getopts hf:d:raRcpudDto:qyk:Ai opt; do
 	case $opt in
 		A)	removal=true; periods=true; dashes=true; underscores=true; years=true; capitalize=true;;
 		a)	aggressive=true;;
@@ -164,6 +175,7 @@ while getopts hf:d:raRcpudDto:qyk:A opt; do
 		c)	capitalize=true;;
 		u)	underscores=true;;
 		t)	dryrun=true;;
+		i)	prompt=true;;
 		k)	delimiter=$OPTARG;;
 		q)	quiet=true;;
 		o)	output_dir=$(realpath "$OPTARG");;

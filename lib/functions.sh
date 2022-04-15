@@ -41,3 +41,16 @@ err () {
 	printf '%s - %s: %s\n' "${txt_bld}[$(TZ=UTC date '+%FT%TZ')]${txt_rst}" \
 	"$(tput bold)Error$(tput sgr0)" "$*" >&2
 }
+yorn_ask () {
+	local _r
+	read -rp "$* [Y/n]: " _r >&2
+	until [[ ${_r,,} == y || ${_r,,} == n ]]; do
+		printf '%s\n' "Please respond only with y or n" >&2
+		read -rp "$* [Y/n]: " _r >&2
+	done
+	if [[ ${_r,,} == y ]]; then
+		return 0
+	else
+		return 1
+	fi
+}
