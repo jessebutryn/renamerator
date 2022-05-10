@@ -7,7 +7,8 @@ my @remove =
 	'1400MB', 
 	'2160p', 
 	'720p', 
-	'800MB', 
+	'800MB',
+	'[0-9]+mb',
 	'AAC2[.]?0',
 	'\bAMZN\b', 
 	'An0mal1', 
@@ -31,6 +32,7 @@ my @remove =
 	'[\(\)]', 
 	'[][]',
 	'\+',
+	'x260bit',
 	'hdtv', 
 	'SYNCOPY',
 	'mrsk',
@@ -74,7 +76,19 @@ my @remove =
 	'evoethd',
 	'yify',
 	'ac3',
-	'Shaanig'
+	'Shaanig',
+	'Pcok',
+	'\bDdp\b',
+	'Npmseztv',
+	'Rarbgeztv',
+	'rarbg',
+	'mp4',
+	'\bbelos\b',
+	'\byts\b',
+	'\bmx\b',
+	'vppv',
+	'www.usabit.com',
+	'Imeutr'
 );
 
 

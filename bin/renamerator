@@ -150,7 +150,7 @@ renamerate () {
 		return 6
 	elif [[ $dryrun == true ]]; then
 		printf 'mv "%s" "%s"\n' "$_file" "$_newfullname" >&2
-		return 8		
+		return 8
 	fi
 
 	if [[ $prompt == false ]]; then
@@ -162,25 +162,25 @@ renamerate () {
 	fi
 }
 #######################################
-while getopts hf:d:raRcpudDto:qyk:Ai opt; do
+while getopts aAcd:Df:hik:o:pqrRtuy opt; do
 	case $opt in
-		A)	removal=true; periods=true; dashes=true; underscores=true; years=true; capitalize=true;;
 		a)	aggressive=true;;
-		f)	file=$(realpath "$OPTARG");;
-		d)	directory=$(realpath "$OPTARG");;
-		r)	removal=true;;
-		R)	recursive=true;;
-		p)	periods=true;;
-		D)	dashes=true;;
+		A)	removal=true; periods=true; dashes=true; underscores=true; years=true; capitalize=true;;
 		c)	capitalize=true;;
-		u)	underscores=true;;
-		t)	dryrun=true;;
+		d)	directory=$(realpath "$OPTARG");;
+		D)	dashes=true;;
+		f)	file=$(realpath "$OPTARG");;
+		h)	usage;;
 		i)	prompt=true;;
 		k)	delimiter=$OPTARG;;
-		q)	quiet=true;;
 		o)	output_dir=$(realpath "$OPTARG");;
+		p)	periods=true;;
+		q)	quiet=true;;
+		r)	removal=true;;
+		R)	recursive=true;;
+		t)	dryrun=true;;
+		u)	underscores=true;;
 		y)	years=true;;
-		h)	usage;;
 		*)	err "Unknown option: $opt"; usage;;
 	esac
 done

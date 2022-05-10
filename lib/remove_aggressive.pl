@@ -17,7 +17,13 @@ my @remove =
 	'Immerse',
 	'Dimension',
 	'Kompost',
-	'Megusta'
+	'Megusta',
+	'\bweb\b',
+	'\beng\b',
+	'\bsubs\b',
+	'\bevo\b',
+	'playnow',
+	'\bhq\b'
 );
 
 

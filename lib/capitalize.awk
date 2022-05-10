@@ -1,7 +1,7 @@
 #!/usr/bin/awk -f
 
 BEGIN{
-		FS="[_ .-]"
+		FS="[_ .]"
 		ORS=" "
 }
 
