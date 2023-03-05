@@ -23,7 +23,27 @@ my @remove =
 	'\bsubs\b',
 	'\bevo\b',
 	'playnow',
-	'\bhq\b'
+	'\bhq\b',
+	'\bAm\b',
+	'Etrg',
+	'\bOpus\b',
+	'kappa',
+	'Internal',
+	'Rovers',
+	'\blt\b',
+	'repack',
+	'Gossip',
+	'flux',
+	'\bnf\b',
+	'\brip\b',
+	'\bgaz\b',
+	'tigole',
+	'\bag\b',
+	'\bEncode\b',
+	'\bv3\b',
+	'line audio',
+	'audio',
+	'\b264\b'
 );
 
 
